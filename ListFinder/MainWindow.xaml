@@ -1,0 +1,131 @@
+﻿<Window x:Class="ListFinder.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ListFinder"
+        mc:Ignorable="d"
+        Title="ListFinder" Height="600" Width="800" MinHeight="600" MinWidth="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <GroupBox Grid.Row="0" Header="Excel" Margin="4 2">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="0.3*"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="0.3*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Label Grid.Column="0" VerticalAlignment="Center" Content="File Name:"/>
+                    <Label Name="txtExcelName" Grid.Column="1" VerticalAlignment="Center"/>
+                    <Button Name="btnOpenFile" Grid.Column="2" Click="btnOpenFile_Click" Content="Open Excel File" Margin="5"/>
+                    <Label Grid.Column="3" Margin="0 5" VerticalAlignment="Center" Content="Starting Row #"/>
+                    <TextBox Name="txtStartingRowNumber" Grid.Column="4" Margin="5 7" Text="2" TextAlignment="Center" VerticalContentAlignment="Center" IsEnabled="false"/>
+                    <Label Grid.Column="5" Margin="0 5" VerticalAlignment="Center" Content="Column #"/>
+                    <TextBox Name="txtColumnNumber"  Grid.Column="6" Margin="5 7" Text="1" TextAlignment="Center" VerticalContentAlignment="Center" IsEnabled="false"/>
+                    <Button Grid.Column="7" Click="btnExtractExcelFile_Click" Name="btnExtractExcelFile" Content="Extract Excel File" Margin="5" IsEnabled="false"/>
+                </Grid>
+            </GroupBox>
+
+            <GroupBox Grid.Row="1" Header="Search" Margin="4 0 4 2">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid Grid.Row="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width=".05*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Label Content="Directory:" Grid.Column="0" VerticalAlignment="Center"/>
+                        <TextBox Grid.Column="1" Margin="5,5,5,5" Name="txtSearchDirectory" Grid.ColumnSpan="3"/>
+                        <Button Grid.Column="2" Margin="0,5,5,5" Click="btnSearchDirectory_Click" Name="btnBrowse" Content="..."/>
+                    </Grid>
+
+                    <Grid Grid.Row="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="0.1*"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="0.1*"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="1*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Column="0" Content="Parameters"/>
+                        <StackPanel Grid.Column="1" Orientation="Horizontal">
+                            <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
+                        </StackPanel>
+                        <Label Grid.Column="2" VerticalAlignment="Center" Content="Prefix:"/>
+                        <TextBox Name="txtPrefix" Grid.Column="3" Margin="5" VerticalContentAlignment="Center"/>
+                        <Label Grid.Column="4" VerticalAlignment="Center" Content="Suffix:"/>
+                        <TextBox Name="txtSuffix" Grid.Column="5" Margin="5" VerticalContentAlignment="Center"/>
+                        <Label Grid.Column="6" VerticalAlignment="Center" Content="File Extensions:"/>
+                        <TextBox Name="txtFileExtensions" Grid.Column="7" Margin="5" Text="*.json|*.ts|*.html|*.cs" VerticalContentAlignment="Center"/>
+                    </Grid>
+
+                </Grid>
+            </GroupBox>
+
+            <Button Grid.Row="2" Click="btnStartSearch_Click" Name="btnStartSearch" Content="Start Search" Margin="5"/>
+
+            <ProgressBar Grid.Row="3" Height="15" Margin="5"/>
+
+        </Grid>
+
+        <Label Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center">Items</Label>
+        <TextBox Name="txtItems" Grid.Row="2" Grid.Column="0" Margin="5 0 0 5"
+            VerticalScrollBarVisibility="Visible" TextWrapping="Wrap"
+            AcceptsReturn="True"/>
+
+        <StackPanel Grid.Row="1" Grid.RowSpan="2" Grid.Column="1" Margin="3 0 3 5" Orientation="Horizontal">
+            <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
+        </StackPanel>
+
+        <Label Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center">Search Result</Label>
+        <TextBox Name="txtSearchResults" Grid.Row="2" Grid.Column="2" Margin="0 0 5 5"
+            VerticalScrollBarVisibility="Visible" TextWrapping="Wrap"
+            AcceptsReturn="True"/>
+
+    </Grid>
+</Window>
